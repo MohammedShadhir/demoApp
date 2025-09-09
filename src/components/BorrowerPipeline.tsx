@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import type { Borrower } from '@/types';
-import type { BorrowerPipelineData } from '@/api/types';
+import type { Borrower, BorrowerPipelineData } from '@/api/types';
 
 
 interface BorrowerCardProps {
