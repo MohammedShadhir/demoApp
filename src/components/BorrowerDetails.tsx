@@ -1,5 +1,3 @@
-// src/components/BorrowerDetails.tsx
-
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
@@ -73,8 +71,8 @@ export default function BorrowerDetails({
 
     if (!borrower) {
         return (
-            <Card className="shadow-md rounded-2xl h-full flex justify-center items-center">
-                <CardContent className="p-6 text-gray-500">
+            <Card className="shadow-md rounded-2xl h-full flex justify-center items-center bg-white dark:bg-gray-900">
+                <CardContent className="p-6 text-gray-500 dark:text-gray-400">
                     Select a borrower to view details
                 </CardContent>
             </Card>
@@ -85,14 +83,14 @@ export default function BorrowerDetails({
     const isEscalateEnabled = borrower.status === 'New' || borrower.status === 'In Review';
 
     return (
-        <Card className="shadow-md rounded-2xl h-full flex flex-col">
-            <CardHeader className="flex flex-row items-start justify-between">
+        <Card className="shadow-md rounded-2xl h-full flex flex-col bg-white dark:bg-gray-900">
+            <CardHeader className="flex flex-row items-start justify-between border-b border-gray-200 dark:border-gray-800">
                 <div className="flex flex-col space-y-1">
-                    <CardTitle className="text-2xl font-bold">{borrower.name}</CardTitle>
-                    <p className="text-sm text-gray-500">
+                    <CardTitle className="text-2xl font-bold text-gray-800 dark:text-gray-100">{borrower.name}</CardTitle>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                         {borrower.email} | {borrower.phone}
                     </p>
-                    <p className="text-lg font-semibold mt-2">
+                    <p className="text-lg font-semibold mt-2 text-gray-800 dark:text-gray-100">
                         {formatCurrency(borrower.loan_amount)}
                     </p>
                 </div>
@@ -104,13 +102,13 @@ export default function BorrowerDetails({
                 {borrower.ai_flags.length > 0 && (
                     <Accordion type="single" collapsible>
                         <AccordionItem value="ai">
-                            <AccordionTrigger className="font-semibold text-gray-800">
+                            <AccordionTrigger className="font-semibold text-gray-800 dark:text-gray-100">
                                 AI Explainability
                             </AccordionTrigger>
                             <AccordionContent>
                                 <div className="space-y-2 pt-2">
                                     {borrower.ai_flags.map((flag, i) => (
-                                        <div key={i} className="flex items-center gap-2 text-red-600">
+                                        <div key={i} className="flex items-center gap-2 text-red-600 dark:text-red-400">
                                             <AlertTriangle className="h-4 w-4 flex-shrink-0" />
                                             <span>{flag}</span>
                                         </div>
@@ -133,28 +131,28 @@ export default function BorrowerDetails({
                 {/* Loan Summary */}
                 <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                        <p className="text-gray-500">Employment</p>
-                        <p className="font-medium">{borrower.employment}</p>
+                        <p className="text-gray-500 dark:text-gray-400">Employment</p>
+                        <p className="font-medium text-gray-800 dark:text-gray-100">{borrower.employment}</p>
                     </div>
                     <div>
-                        <p className="text-gray-500">Existing Loan</p>
-                        <p className="font-medium">{formatCurrency(borrower.existing_loan)}</p>
+                        <p className="text-gray-500 dark:text-gray-400">Existing Loan</p>
+                        <p className="font-medium text-gray-800 dark:text-gray-100">{formatCurrency(borrower.existing_loan)}</p>
                     </div>
                     <div>
-                        <p className="text-gray-500">Credit Score</p>
-                        <p className="font-medium">{borrower.credit_score}</p>
+                        <p className="text-gray-500 dark:text-gray-400">Credit Score</p>
+                        <p className="font-medium text-gray-800 dark:text-gray-100">{borrower.credit_score}</p>
                     </div>
                     <div>
-                        <p className="text-gray-500">Funds</p>
-                        <p className="font-medium">{borrower.source_of_funds}</p>
+                        <p className="text-gray-500 dark:text-gray-400">Funds</p>
+                        <p className="font-medium text-gray-800 dark:text-gray-100">{borrower.source_of_funds}</p>
                     </div>
                 </div>
 
                 {/* Risk Signal */}
                 {borrower.risk_signal && (
-                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
-                        <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0" />
-                        <span>{borrower.risk_signal}</span>
+                    <div className="p-3 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-2">
+                        <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+                        <span className="text-gray-800 dark:text-gray-100">{borrower.risk_signal}</span>
                     </div>
                 )}
 

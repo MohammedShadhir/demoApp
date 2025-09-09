@@ -3,20 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 
-// 1. Import types from your centralized types file
 import type { BrokerInfoData, OnboardingWorkflowData } from "@/api/types";
-
-// 2. Import the mock API functions
 import { getBrokerInfo, getOnboardingWorkflow } from "@/api/mock-api";
 
-// This component no longer needs a 'brokerId' prop
 export default function BrokerOverview() {
-    // Use the correct types from the api/types file
     const [broker, setBroker] = useState<BrokerInfoData | null>(null);
     const [workflow, setWorkflow] = useState<OnboardingWorkflowData | null>(null);
     const [loading, setLoading] = useState(true);
 
-    // Use the mock API functions to fetch data
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,38 +25,37 @@ export default function BrokerOverview() {
             }
         };
         fetchData();
-    }, []); // Empty dependency array means it runs only once
+    }, []);
 
     if (loading) {
         return (
-            <Card className="shadow-md rounded-2xl h-full flex justify-center items-center">
-                <p>Loading...</p>
+            <Card className="shadow-md rounded-2xl h-full flex justify-center items-center bg-white dark:bg-gray-900">
+                <p className="text-gray-500 dark:text-gray-400">Loading...</p>
             </Card>
         );
     }
 
     return (
-        <Card className="shadow-md rounded-2xl h-full flex flex-col">
-            <CardHeader>
-                <CardTitle>Broker Overview</CardTitle>
+        <Card className="shadow-md rounded-2xl h-full flex flex-col bg-white dark:bg-gray-900">
+            <CardHeader className="border-b border-gray-200 dark:border-gray-800">
+                <CardTitle className="text-gray-800 dark:text-gray-100">Broker Overview</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 flex-1 overflow-y-auto">
                 {broker && (
                     <>
-                        <h3 className="font-semibold">{broker.name}</h3>
+                        <h3 className="font-semibold text-gray-800 dark:text-gray-100">{broker.name}</h3>
                         <div className="grid grid-cols-3 gap-2 text-center">
                             <div>
-                                <p className="text-lg font-bold">{broker.deals}</p>
-                                <p className="text-xs">Deals</p>
+                                <p className="text-lg font-bold text-gray-800 dark:text-gray-100">{broker.deals}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">Deals</p>
                             </div>
                             <div>
-                                {/* Corrected to camelCase: broker.approvalRate */}
-                                <p className="text-lg font-bold">{broker.approval_rate}</p>
-                                <p className="text-xs">Approval</p>
+                                <p className="text-lg font-bold text-gray-800 dark:text-gray-100">{broker.approval_rate}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">Approval</p>
                             </div>
                             <div>
-                                <p className="text-lg font-bold">${broker.pending.toLocaleString()}</p>
-                                <p className="text-xs">Pending</p>
+                                <p className="text-lg font-bold text-gray-800 dark:text-gray-100">${broker.pending.toLocaleString()}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">Pending</p>
                             </div>
                         </div>
                         <div className="flex gap-2">
@@ -74,7 +67,7 @@ export default function BrokerOverview() {
                 )}
 
                 {workflow && (
-                    <ol className="list-decimal pl-5 space-y-1 text-sm">
+                    <ol className="list-decimal pl-5 space-y-1 text-sm text-gray-800 dark:text-gray-100">
                         {workflow.steps.map((step, i) => (
                             <li key={i}>{step}</li>
                         ))}
@@ -83,7 +76,7 @@ export default function BrokerOverview() {
 
                 {/* AI Assistant Toggle */}
                 <div className="flex items-center justify-between">
-                    <span>E Ardsassist</span>
+                    <span className="text-gray-800 dark:text-gray-100">AI Assistant</span>
                     <Switch />
                 </div>
             </CardContent>

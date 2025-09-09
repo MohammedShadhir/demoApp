@@ -1,5 +1,3 @@
-// src/components/BorrowerPipeline.tsx
-
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -14,7 +12,6 @@ interface BorrowerCardProps {
     onClick: () => void;
 }
 
-// A dedicated component for each borrower card for clarity and reusability
 const BorrowerCard: React.FC<BorrowerCardProps> = ({ borrower, isActive, onClick }) => {
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -43,14 +40,17 @@ const BorrowerCard: React.FC<BorrowerCardProps> = ({ borrower, isActive, onClick
         <div
             onClick={onClick}
             className={`flex justify-between items-center p-3 rounded-lg cursor-pointer transition-colors
-        ${isActive ? 'bg-blue-100 dark:bg-blue-900 border border-blue-400' : 'hover:bg-gray-50 dark:hover:bg-gray-800'}`}
+            ${isActive
+                    ? 'bg-blue-100 dark:bg-blue-900 border border-blue-400 dark:border-blue-700'
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
         >
             <div className="flex-1 min-w-0">
-                <h3 className="font-semibold truncate">{borrower.name}</h3>
-                <p className="text-sm text-gray-500 truncate">{borrower.loanType}</p>
+                <h3 className="font-semibold truncate text-gray-800 dark:text-gray-100">{borrower.name}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{borrower.loanType}</p>
             </div>
             <div className="flex-shrink-0 text-right ml-4">
-                <p className="font-semibold">{formatter.format(borrower.amount)}</p>
+                <p className="font-semibold text-gray-800 dark:text-gray-100">{formatter.format(borrower.amount)}</p>
                 <Badge variant={getStatusVariant(borrower.status)} className="mt-1 text-xs">
                     {borrower.status}
                 </Badge>
@@ -77,16 +77,31 @@ export default function BorrowerPipeline({
     };
 
     return (
-        <Card className="shadow-md rounded-2xl h-full flex flex-col">
-            <CardHeader>
-                <CardTitle>Pipeline</CardTitle>
+        <Card className="shadow-md rounded-2xl h-full flex flex-col bg-white dark:bg-gray-900">
+            <CardHeader className="border-b border-gray-200 dark:border-gray-800">
+                <CardTitle className="text-gray-800 dark:text-gray-100">Pipeline</CardTitle>
             </CardHeader>
-            <CardContent className="flex-1 overflow-y-auto p-0">
+            <CardContent className="flex-1 overflow-y-auto px-4">
                 <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'new' | 'in_review' | 'approved')}>
-                    <TabsList className="grid grid-cols-3">
-                        <TabsTrigger value="new">New</TabsTrigger>
-                        <TabsTrigger value="in_review">In Review</TabsTrigger>
-                        <TabsTrigger value="approved">Approved</TabsTrigger>
+                    <TabsList className="grid grid-cols-3 w-full p-1  bg-gray-100 dark:bg-gray-800">
+                        <TabsTrigger
+                            value="new"
+                            className="text-gray-800 dark:text-gray-100"
+                        >
+                            New
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="in_review"
+                            className="text-gray-800 dark:text-gray-100"
+                        >
+                            In Review
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="approved"
+                            className="text-gray-800 dark:text-gray-100"
+                        >
+                            Approved
+                        </TabsTrigger>
                     </TabsList>
 
                     {pipeline && ["new", "in_review", "approved"].map(status => (
@@ -102,7 +117,7 @@ export default function BorrowerPipeline({
                                         />
                                     ))
                                 ) : (
-                                    <div className="text-center text-gray-500 py-8">
+                                    <div className="text-center text-gray-500 dark:text-gray-400 py-8">
                                         No borrowers in this pipeline.
                                     </div>
                                 )}
