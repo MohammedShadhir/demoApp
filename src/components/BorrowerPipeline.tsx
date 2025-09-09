@@ -1,7 +1,11 @@
+// src/components/BorrowerPipeline.tsx
+
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 import type { Borrower, BorrowerPipelineData } from '@/api/types';
 
 
@@ -68,6 +72,7 @@ export default function BorrowerPipeline({
 }) {
     const [activeTab, setActiveTab] = useState<'new' | 'in_review' | 'approved'>('new');
     const [activeBorrowerId, setActiveBorrowerId] = useState<string | null>(null);
+    const [sanitisedActive, setSanitisedActive] = useState<string>('sanitised');
 
     // Function to handle borrower selection and update state
     const handleSelect = (id: string) => {
@@ -80,9 +85,9 @@ export default function BorrowerPipeline({
             <CardHeader className="border-b border-gray-200 dark:border-gray-800">
                 <CardTitle className="text-gray-800 dark:text-gray-100">Pipeline</CardTitle>
             </CardHeader>
-            <CardContent className="flex-1 overflow-y-auto px-4">
+            <CardContent className="flex-1 overflow-y-auto p-0">
                 <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'new' | 'in_review' | 'approved')}>
-                    <TabsList className="grid grid-cols-3 w-full p-1  bg-gray-100 dark:bg-gray-800">
+                    <TabsList className="grid grid-cols-3 w-full p-1 bg-gray-100 dark:bg-gray-800">
                         <TabsTrigger
                             value="new"
                             className="text-gray-800 dark:text-gray-100"
@@ -124,6 +129,28 @@ export default function BorrowerPipeline({
                         </TabsContent>
                     ))}
                 </Tabs>
+
+                {/* New Radio Section */}
+                <div className="px-4 py-4 border-t border-gray-200 dark:border-gray-800">
+                    <p className="text-sm font-semibold mb-2 uppercase text-gray-800 dark:text-gray-100">
+                        F-SANATISED ACTIVE
+                    </p>
+                    <RadioGroup
+                        defaultValue="sanitised"
+                        value={sanitisedActive}
+                        onValueChange={setSanitisedActive}
+                        className="flex gap-4"
+                    >
+                        <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="sanitised" id="r1" />
+                            <Label htmlFor="r1" className="text-gray-700 dark:text-gray-300">Sanitised</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="active" id="r2" />
+                            <Label htmlFor="r2" className="text-gray-700 dark:text-gray-300">Active</Label>
+                        </div>
+                    </RadioGroup>
+                </div>
             </CardContent>
         </Card>
     );
